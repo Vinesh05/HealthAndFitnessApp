@@ -5,18 +5,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity"
+    android:background="@color/primary">
 
     <FrameLayout
+        android:id="@+id/frameLayoutMainActivity"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/viewPagerMainActivity"/>
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationMainActivity"/>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPagerMainActivity"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomNavigationMainActivity"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:background="@drawable/bottom_menu_background"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/kcalBottomNavigation"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_kcal_unselected"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/dietPlanBottomNavigation"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/dietPlanBottomNavigation"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_diet_plan_unselected"
+            app:layout_constraintStart_toEndOf="@id/kcalBottomNavigation"
+            app:layout_constraintEnd_toStartOf="@id/exerciseBottomNavigation"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/exerciseBottomNavigation"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_exercise_unselected"
+            app:layout_constraintStart_toEndOf="@id/dietPlanBottomNavigation"
+            app:layout_constraintEnd_toStartOf="@id/blogsBottomNavigation"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/blogsBottomNavigation"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_blogs_unselected"
+            app:layout_constraintStart_toEndOf="@id/exerciseBottomNavigation"
+            app:layout_constraintEnd_toStartOf="@id/waterReminderBottomNavigation"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/waterReminderBottomNavigation"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_water_unselected"
+            app:layout_constraintStart_toEndOf="@id/blogsBottomNavigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

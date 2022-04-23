@@ -1,4 +1,4 @@
-package com.example.healthandfitness
+package com.example.healthandfitness.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +23,13 @@ class LoginActivity : AppCompatActivity() {
 
                 edtTxtOtpLoginActivity.visibility = View.VISIBLE
                 edtTxtPhoneLoginActivity.visibility = View.INVISIBLE
+
+            }
+            btnSubmitLoginActivity.setOnClickListener {
+
+                Intent(this@LoginActivity, MainActivity::class.java).also{
+                    startActivity(it)
+                }
 
             }
         }
