@@ -6,16 +6,8 @@
         <entry key="..\:/Users/HP/AndroidStudioProjects/HealthAndFitness/app/src/main/res/drawable/shadow_rectangle.xml" value="0.1435" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/HealthAndFitness/app/src/main/res/layout/activity_login.xml" value="0.221025641025641" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/HealthAndFitness/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
-        <entry key="app/src/main/res/drawable/bottom_menu_background.xml" value="0.1695" />
-        <entry key="app/src/main/res/drawable/btn_background.xml" value="0.1445" />
-        <entry key="app/src/main/res/drawable/progress_bar_drawable.xml" value="0.2155" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2712962962962963" />
-        <entry key="app/src/main/res/layout/fragment_blogs.xml" value="0.36666666666666664" />
-        <entry key="app/src/main/res/layout/fragment_diet_plan.xml" value="0.36666666666666664" />
-        <entry key="app/src/main/res/layout/fragment_exercise.xml" value="0.36666666666666664" />
-        <entry key="app/src/main/res/layout/fragment_kcal.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_water_reminder.xml" value="0.36666666666666664" />
-        <entry key="app/src/main/res/layout/single_row_food.xml" value="0.25" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/HealthAndFitness/app/src/main/res/layout/fragment_diet_plan.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/HealthAndFitness/app/src/main/res/layout/fragment_kcal.xml" value="0.22447916666666667" />
       </map>
     </option>
   </component>
