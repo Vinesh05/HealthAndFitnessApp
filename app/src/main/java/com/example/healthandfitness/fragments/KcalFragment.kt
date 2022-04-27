@@ -35,7 +35,7 @@ class KcalFragment : Fragment() {
         intakeList.add(Food("Pizza4",""))
         intakeList.add(Food("Burger4",""))
 
-        intakeAdapter = FoodAdapter(intakeList,requireContext())
+        intakeAdapter = FoodAdapter(intakeList,requireContext(),R.drawable.ic_right_arrow)
 
         binding.apply {
 
