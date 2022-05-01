@@ -1,24 +1,69 @@
 package com.example.healthandfitness.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.healthandfitness.Constants
 import com.example.healthandfitness.R
 import com.example.healthandfitness.databinding.ActivityMainBinding
 import com.example.healthandfitness.fragments.*
+import com.example.healthandfitness.model.Food
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
-    val kcalFragment = KcalFragment()
-    val dietPlanFragment = DietPlanFragment()
-    val exerciseFragment = ExerciseFragment()
-    val blogsFragment = BlogsFragment()
-    val waterFragment = WaterReminderFragment()
+    private val kcalFragment = KcalFragment()
+    private val dietPlanFragment = DietPlanFragment()
+    private val exerciseFragment = ExerciseFragment()
+    private val blogsFragment = BlogsFragment()
+    private val waterFragment = WaterReminderFragment()
+    private lateinit var db: FirebaseFirestore
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        db = FirebaseFirestore.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        if(firebaseAuth.currentUser==null){
+            Intent(this,LoginActivity::class.java).also{
+                startActivity(it)
+            }
+        }
+
+        db.collection("foods").get().addOnCompleteListener {
+            try{
+                if(it.isSuccessful){
+                    if(Constants.allAvailableFoodsList.isEmpty()){
+                        it.result.documents.forEach {  doc ->
+                            val docId = doc.id
+                            val name = doc["name"].toString()
+                            val carbs = doc["carbs"].toString().toDouble()
+                            val fats = doc["fats"].toString().toDouble()
+                            val fiber = doc["fiber"].toString().toDouble()
+                            val protein = doc["protein"].toString().toDouble()
+                            val calories = doc["calories"].toString().toInt()
+                            val image = doc["image"].toString()
+                            Constants.allAvailableFoodsList.add(Food(docId, name,calories, carbs, fats, fiber, protein, image))
+                        }
+                    }
+                }
+                else{
+                    Toast.makeText(this@MainActivity, "Failed to retrieve all foods",Toast.LENGTH_SHORT).show()
+                    finishAffinity()
+                }
+            }
+            catch(e: Exception){
+                Toast.makeText(this@MainActivity, "Failed to retrieve all foods",Toast.LENGTH_SHORT).show()
+            }
+        }
 
         setUpBottomNavigation()
 
@@ -90,6 +135,10 @@ class MainActivity : AppCompatActivity() {
             kcalBottomNavigation.callOnClick()
         }
 
+    }
+
+    override fun onBackPressed() {
+        finishAffinity()
     }
 
 }

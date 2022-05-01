@@ -8,17 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.healthandfitness.R
 import com.example.healthandfitness.activities.BlogActivity
 import com.example.healthandfitness.model.Blog
-import com.google.android.material.card.MaterialCardView
 import java.lang.Exception
 
 class BlogAdapter(private val blogList: ArrayList<Blog>,private val context: Context): RecyclerView.Adapter<BlogAdapter.BlogViewHolder>() {
 
     class BlogViewHolder(view: View): RecyclerView.ViewHolder(view){
-        val mainCardView: MaterialCardView = view.findViewById(R.id.mainCardViewBlogSingleRow)
+        val mainCard: ConstraintLayout = view.findViewById(R.id.mainCardViewBlogSingleRow)
         val txtTitle: TextView = view.findViewById(R.id.txtBlogTitleBlogSingleRow)
         val txtDescription: TextView = view.findViewById(R.id.txtShortDescriptionBlogSingleRow)
         val imgBlog: ImageView = view.findViewById(R.id.imgViewBlogSingleRow)
@@ -34,7 +34,7 @@ class BlogAdapter(private val blogList: ArrayList<Blog>,private val context: Con
             holder.apply {
                 txtTitle.text = blogList[position].title
                 txtDescription.text = blogList[position].description
-                mainCardView.setOnClickListener {
+                mainCard.setOnClickListener {
                     Intent(context,BlogActivity::class.java).also{
                         it.putExtra("title",blogList[position].title)
                         it.putExtra("description",blogList[position].description)

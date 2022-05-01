@@ -4,4 +4,5 @@
     <color name="secondary">#364F6B</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#A63535</color>
 </resources>

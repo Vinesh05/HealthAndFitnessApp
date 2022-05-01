@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    tools:context=".activities.SelectFoodFromListActivity">
+
+    <EditText
+        android:id="@+id/edtTxtSearchSelectFoodActivity"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="48dp"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="4dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:hint="search"
+        android:textColorHint="@color/black"
+        android:maxLines="1"
+        android:background="@drawable/edt_txt_background"
+        android:autofillHints="phone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnSearchSelectFoodActivity"
+        app:layout_constraintTop_toTopOf="@id/btnSearchSelectFoodActivity"
+        app:layout_constraintBottom_toBottomOf="@id/btnSearchSelectFoodActivity"/>
+    
+    <RelativeLayout
+        android:id="@+id/btnSearchSelectFoodActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="8dp"
+        android:padding="12dp"
+        android:background="@drawable/shadow_background"
+        app:layout_constraintStart_toEndOf="@id/edtTxtSearchSelectFoodActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_search"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSelectFoodActivity"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@id/edtTxtSearchSelectFoodActivity"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

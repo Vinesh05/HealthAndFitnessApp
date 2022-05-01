@@ -26,8 +26,8 @@ class WaterHistoryAdapter(private val timeList: ArrayList<Long>,private val cont
 
     override fun onBindViewHolder(holder: WaterHistoryViewHolder, position: Int) {
         try{
-            val date = Date(timeList[position])
-            val formatter: DateFormat = SimpleDateFormat("HH:mm")
+            val date = Date(timeList[position]+19800000)
+            val formatter: DateFormat = SimpleDateFormat("HH:mm a")
             formatter.timeZone = TimeZone.getTimeZone("UTC")
             holder.txtWaterTime.text = formatter.format(date)
         }
