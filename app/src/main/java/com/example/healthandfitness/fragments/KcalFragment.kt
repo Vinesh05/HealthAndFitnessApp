@@ -47,6 +47,7 @@ class KcalFragment : Fragment() {
         db.collection("users").document(firebaseAuth.currentUser?.uid!!).get().addOnCompleteListener { getUserDataTask->
             if(getUserDataTask.isSuccessful){
                 Constants.userCalorieGoal = getUserDataTask.result?.data?.get("calorieIntake").toString().toInt()
+                Log.d("Vinesh","Calorie Goal: ${Constants.userCalorieGoal}")
                 binding.apply{
                     txtKcalTotalProgress.text = "${Constants.userCalorieGoal}"
                     kcalProgressBar.max = Constants.userCalorieGoal

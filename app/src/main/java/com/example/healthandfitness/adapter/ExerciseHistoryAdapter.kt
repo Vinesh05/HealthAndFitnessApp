@@ -34,9 +34,9 @@ class ExerciseHistoryAdapter(private val exerciseHistoryList: ArrayList<Exercise
             holder.apply{
                 txtDate.text = date
                 txtTime.text = time
-                txtCalBurnt.text = exerciseHistoryList[position].caloriesBurnt.toString()
+                Log.d("Vinesh","date:  $date $time")
+                txtCalBurnt.text = "${exerciseHistoryList[position].caloriesBurnt} kcal"
             }
-
         }
         catch (e: Exception){
             Log.d("Vinesh","Error: ${e.message}")

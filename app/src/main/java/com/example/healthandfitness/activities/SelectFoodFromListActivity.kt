@@ -2,6 +2,7 @@ package com.example.healthandfitness.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Adapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,7 @@ class SelectFoodFromListActivity : AppCompatActivity() {
                 }
                 else{
                     val partOfDay = intent.getStringExtra("partOfDay").toString()
+                    Log.d("Vinesh","Part of Day: $partOfDay")
                     FoodSelectDietPlanAdapter(Constants.allAvailableFoodsList,this@SelectFoodFromListActivity,R.drawable.ic_right_arrow,partOfDay)
                 }
             }

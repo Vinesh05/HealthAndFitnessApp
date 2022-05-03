@@ -33,7 +33,7 @@ class FoodKcalAdapter(private val foodList: ArrayList<Food>, private val context
         try{
             holder.apply{
                 txtFoodName.text = foodList[position].name
-                imgFood.setImageResource(R.drawable.ic_launcher_background)
+                imgFood.setImageResource(R.drawable.logo)
                 imgExtra.setImageResource(R.drawable.ic_remove)
                 imgExtra.setOnClickListener {
                     AlertDialog.Builder(context)

@@ -21,14 +21,19 @@ import java.time.temporal.WeekFields
 import java.util.*
 import kotlin.collections.ArrayList
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import com.example.healthandfitness.activities.TodaysExercisePlanActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.model.InDateStyle
 import com.kizitonwose.calendarview.ui.ViewContainer
@@ -43,6 +48,8 @@ class ExerciseFragment : Fragment() {
     private lateinit var binding: FragmentExerciseBinding
     private lateinit var exerciseHistoryList: ArrayList<ExerciseHistory>
     private lateinit var exerciseHistoryAdapter: ExerciseHistoryAdapter
+    private lateinit var db: FirebaseFirestore
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,20 +57,13 @@ class ExerciseFragment : Fragment() {
     ): View {
         binding = FragmentExerciseBinding.inflate(inflater)
 
-        exerciseHistoryList = ArrayList()
-        exerciseHistoryList.add(ExerciseHistory(1651241155338L,219))
-        exerciseHistoryList.add(ExerciseHistory(1649056872000L,219))
-        exerciseHistoryList.add(ExerciseHistory(1651241181224L,219))
-        exerciseHistoryList.add(ExerciseHistory(1649575272000L,219))
-        exerciseHistoryList.add(ExerciseHistory(1651241194263L,219))
+        db = FirebaseFirestore.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
 
-        exerciseHistoryAdapter = ExerciseHistoryAdapter(exerciseHistoryList,requireContext())
+        exerciseHistoryList = ArrayList()
 
         binding.apply {
-            exerciseHistoryRecyclerView.apply{
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = exerciseHistoryAdapter
-            }
+            exerciseHistoryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
             val daysOfWeek = arrayOf("Mo","Tu","We","Th","Fr","Sa","Su")
             calHeaderLayoutExerciseFragment.children.forEachIndexed { index, view ->
@@ -73,51 +73,78 @@ class ExerciseFragment : Fragment() {
                 }
             }
 
-            calendarViewExerciseFragment.apply{
-                dayBinder = object : DayBinder<DayViewContainer> {
-                    override fun create(view: View) = DayViewContainer(view)
-
-                    override fun bind(container: DayViewContainer, day: CalendarDay) {
-
-                        if(day.owner==DayOwner.THIS_MONTH){
-                            exerciseHistoryList.forEach {
-                                val dt = Instant.ofEpochMilli(it.dateAndTime).atZone(ZoneId.systemDefault()).toLocalDate()
-                                if(day.date == dt){
-                                    container.textView.setBackgroundResource(R.drawable.selected_date_background)
-                                    container.textView.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
-                                }
-                            }
-                            if(day.date.dayOfWeek.value==7){
-                                container.textView.setTextColor(Color.RED)
-                            }
-                            container.textView.text = day.date.dayOfMonth.toString()
-                        }
-
-                    }
+            cardTodaysExercisePlan.setOnClickListener {
+                Intent(requireContext(),TodaysExercisePlanActivity::class.java).also {
+                    startActivity(it)
                 }
-//                monthHeaderResource = R.layout.calendar_header
-//                monthHeaderBinder = object: MonthHeaderFooterBinder<MonthHeaderViewContainer>{
-//                    override fun bind(container: MonthHeaderViewContainer, month: CalendarMonth) {
-//
-//                    }
-//
-//                    override fun create(view: View): MonthHeaderViewContainer = MonthHeaderViewContainer(view)
-//
-//                }
-                val currentMonth = YearMonth.now()
-                val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
-                setup(currentMonth, currentMonth, firstDayOfWeek)
-                scrollToMonth(currentMonth)
             }
+
         }
+
+        getExerciseHistory()
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun getExerciseHistory(){
+        exerciseHistoryList.clear()
+        binding.progressBarExerciseFragment.visibility = View.VISIBLE
+        db.collection("users").document(firebaseAuth.currentUser?.uid!!).collection("exerciseHistory").get().addOnCompleteListener { getAllExHistory->
+            if(getAllExHistory.isSuccessful){
+                getAllExHistory.result.documents.forEach { docs->
+                    Log.d("Vinesh","Get all exercises for each")
+                    val time = docs.data?.get("time").toString().toLong()
+                    val calBurnt = docs.data?.get("calBurnt").toString().toInt()
+                    exerciseHistoryList.add(ExerciseHistory(time,calBurnt))
+                }
+                Log.d("Vinesh","Exercise History List: ${exerciseHistoryList[0].dateAndTime}")
+                exerciseHistoryAdapter = ExerciseHistoryAdapter(exerciseHistoryList,requireContext())
+                binding.apply{
+                    exerciseHistoryRecyclerView.adapter = exerciseHistoryAdapter
+                    calendarViewExerciseFragment.apply{
+                        dayBinder = object : DayBinder<DayViewContainer> {
+                            override fun create(view: View) = DayViewContainer(view)
 
+                            override fun bind(container: DayViewContainer, day: CalendarDay) {
 
+                                if(day.owner==DayOwner.THIS_MONTH){
+                                    exerciseHistoryList.forEach {
+                                        val dt = Instant.ofEpochMilli(it.dateAndTime).atZone(ZoneId.systemDefault()).toLocalDate()
+                                        if(day.date == dt){
+                                            container.textView.setBackgroundResource(R.drawable.selected_date_background)
+                                            container.textView.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+                                        }
+                                    }
+                                    if(day.date.dayOfWeek.value==7){
+                                        container.textView.setTextColor(Color.RED)
+                                    }
+                                    container.textView.text = day.date.dayOfMonth.toString()
+                                }
 
+                            }
+                        }
+//                        monthHeaderResource = R.layout.calendar_header
+//                        monthHeaderBinder = object: MonthHeaderFooterBinder<MonthHeaderViewContainer>{
+//                            override fun bind(container: MonthHeaderViewContainer, month: CalendarMonth) {
+//
+//                            }
+//
+//                            override fun create(view: View): MonthHeaderViewContainer = MonthHeaderViewContainer(view)
+//
+//                        }
+                        val currentMonth = YearMonth.now()
+                        val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
+                        setup(currentMonth, currentMonth, firstDayOfWeek)
+                        scrollToMonth(currentMonth)
+                    }
+                    progressBarExerciseFragment.visibility = View.GONE
+                }
+            }
+            else{
+                binding.progressBarExerciseFragment.visibility = View.GONE
+                Toast.makeText(requireContext(),"Check your internet connection",Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 }

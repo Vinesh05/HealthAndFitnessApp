@@ -41,7 +41,7 @@ class FoodSelectKcalAdapter(private val foodList: ArrayList<Food>, private val c
         try{
             holder.apply{
                 txtFoodName.text = foodList[position].name
-                imgFood.setImageResource(R.drawable.ic_launcher_background)
+                imgFood.setImageResource(R.drawable.logo)
                 imgExtra.setImageResource(imgExtraSource)
                 mainLayout.setOnClickListener {
                     val todayDate = Calendar.getInstance().time

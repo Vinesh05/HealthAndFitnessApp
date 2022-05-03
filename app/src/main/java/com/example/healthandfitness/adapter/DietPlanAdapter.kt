@@ -43,7 +43,7 @@ class DietPlanAdapter(private val dietList: ArrayList<DietPlan>, private val con
                     }
                 }
                 recyclerViewDietPlan.layoutManager = LinearLayoutManager(context)
-                val adapter = FoodDietPlanAdapter(dietList[position].foodList,context)
+                val adapter = FoodDietPlanAdapter(dietList[position].foodList,context,dietList[position].partOfDay)
                 if(adapterList.size<3){
                     adapterList.add(adapter)
                 }

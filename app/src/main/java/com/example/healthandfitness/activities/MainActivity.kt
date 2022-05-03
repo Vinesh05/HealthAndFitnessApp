@@ -36,6 +36,8 @@ class MainActivity : AppCompatActivity() {
             Intent(this,LoginActivity::class.java).also{
                 startActivity(it)
             }
+            finish()
+            return
         }
 
         db.collection("foods").get().addOnCompleteListener {

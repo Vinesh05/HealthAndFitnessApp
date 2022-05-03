@@ -42,7 +42,7 @@ class FoodSelectDietPlanAdapter(private val foodList: ArrayList<Food>, private v
         try{
             holder.apply{
                 txtFoodName.text = foodList[position].name
-                imgFood.setImageResource(R.drawable.ic_launcher_background)
+                imgFood.setImageResource(R.drawable.logo)
                 imgExtra.setImageResource(imgExtraSource)
                 mainLayout.setOnClickListener {
                     val todayDate = Calendar.getInstance().time
@@ -70,9 +70,9 @@ class FoodSelectDietPlanAdapter(private val foodList: ArrayList<Food>, private v
                                                 context.startActivity(it)
                                             }
                                         }
-                                        else{
-                                            Toast.makeText(context,"Please Check your Internet connection", Toast.LENGTH_SHORT).show()
-                                        }
+                                    }
+                                    Intent(context,MainActivity::class.java).also{
+                                        context.startActivity(it)
                                     }
                                 }
                             }
