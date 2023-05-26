@@ -91,6 +91,7 @@ class KcalFragment : Fragment() {
             Constants.usersCalorieIntakeList.clear()
             if((getIntakeList.isSuccessful) and (getIntakeList.result.size()>0)){
                 getIntakeList.result.documents.forEach { doc->
+                    todaysCalories = 0
                     if(doc["date"]==todaysDateString){
                         val docId = doc.id
                         val name = doc["name"].toString()

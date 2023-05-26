@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.healthandfitness.R
 import com.example.healthandfitness.activities.BlogActivity
 import com.example.healthandfitness.model.Blog
@@ -34,6 +35,10 @@ class BlogAdapter(private val blogList: ArrayList<Blog>,private val context: Con
             holder.apply {
                 txtTitle.text = blogList[position].title
                 txtDescription.text = blogList[position].description
+                Glide.with(context)
+                    .load(blogList[position].image)
+                    .error(R.drawable.ic_launcher_foreground)
+                    .into(holder.imgBlog)
                 mainCard.setOnClickListener {
                     Intent(context,BlogActivity::class.java).also{
                         it.putExtra("title",blogList[position].title)

@@ -97,7 +97,7 @@ class ExerciseFragment : Fragment() {
                     val calBurnt = docs.data?.get("calBurnt").toString().toInt()
                     exerciseHistoryList.add(ExerciseHistory(time,calBurnt))
                 }
-                Log.d("Vinesh","Exercise History List: ${exerciseHistoryList[0].dateAndTime}")
+//                Log.d("Vinesh","Exercise History List: ${exerciseHistoryList[0].dateAndTime}")
                 exerciseHistoryAdapter = ExerciseHistoryAdapter(exerciseHistoryList,requireContext())
                 binding.apply{
                     exerciseHistoryRecyclerView.adapter = exerciseHistoryAdapter

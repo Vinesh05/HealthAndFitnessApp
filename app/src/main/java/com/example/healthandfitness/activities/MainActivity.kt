@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             }
             finish()
             return
+
         }
 
         db.collection("foods").get().addOnCompleteListener {

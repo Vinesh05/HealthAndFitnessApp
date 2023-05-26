@@ -2,6 +2,7 @@ package com.example.healthandfitness.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.bumptech.glide.Glide
 import com.example.healthandfitness.R
 import com.example.healthandfitness.databinding.ActivityBlogBinding
 
@@ -21,6 +22,10 @@ class BlogActivity : AppCompatActivity() {
         binding.apply {
             txtBlogTitleBlogActivity.text = blogTitle.toString()
             txtBlogDescriptionBlogActivity.text = blogDescription.toString()
+            Glide.with(this@BlogActivity)
+                .load(blogImage)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(imgBlogActivity)
         }
 
     }

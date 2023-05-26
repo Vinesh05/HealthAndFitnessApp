@@ -26,7 +26,8 @@
             <ImageView
                 android:id="@+id/imgBlogActivity"
                 android:layout_width="280dp"
-                android:layout_height="280dp" />
+                android:layout_height="280dp"
+                android:scaleType="centerCrop"/>
 
         </com.google.android.material.card.MaterialCardView>
 
